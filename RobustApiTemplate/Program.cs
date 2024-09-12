@@ -1,6 +1,13 @@
+using RobustApiTemplate.Engine.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
+// Get connectionstring from appsettings.json.
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+
 // Add services to the container.
+builder.Services.AddSingleton<IDatabaseService>(provider =>
+    new DatabaseService(connectionString));
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
