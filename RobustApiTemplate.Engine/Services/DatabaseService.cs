@@ -16,29 +16,27 @@ public class DatabaseService(string connectionString) : IDatabaseService
 
     public async Task<Employee> GetEmployeeByIdAsync(int id)
     {
-        using (SqlConnection connection = new SqlConnection(_connectionString))
+        using SqlConnection connection = new SqlConnection(_connectionString);
+        connection.Open();
+
+        using SqlCommand command = connection.CreateCommand();
+        command.CommandType = System.Data.CommandType.Text;
+        command.CommandText = "SELECT * FROM [Employee] WHERE [Id] = @EmployeeId";
+        command.Parameters.AddWithValue("@EmployeeId", id);
+
+        SqlDataReader reader = await command.ExecuteReaderAsync();
+
+        if (reader.HasRows && reader.Read())
         {
-            connection.Open();
-
-            using SqlCommand command = connection.CreateCommand();
-            command.CommandType = System.Data.CommandType.Text;
-            command.CommandText = "SELECT * FROM [Employee] WHERE [Id] = @EmployeeId";
-            command.Parameters.AddWithValue("@EmployeeId", id);
-
-            SqlDataReader reader = await command.ExecuteReaderAsync();
-
-            if (reader.HasRows && reader.Read())
+            return new Employee()
             {
-                return new Employee()
-                {
-                    Id = reader.GetValue<int>("Id"),
-                    FirstName = reader.GetValue<string>("FirstName"),
-                    LastName = reader.GetValue<string>("LastName")
-                };
-            }
-
-            return null;
+                Id = reader.GetValue<int>("Id"),
+                FirstName = reader.GetValue<string>("FirstName"),
+                LastName = reader.GetValue<string>("LastName")
+            };
         }
+
+        return null;
     }
 
     #endregion

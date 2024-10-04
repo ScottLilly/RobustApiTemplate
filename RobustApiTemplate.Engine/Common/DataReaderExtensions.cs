@@ -4,7 +4,7 @@ namespace RobustApiTemplate.Engine.Common;
 
 public static class DataReaderExtensions
 {
-    public static T GetValue<T>(this IDataReader reader, string columnName)
+    public static T? GetValue<T>(this IDataReader reader, string columnName)
     {
         int ordinal = reader.GetOrdinal(columnName);
         if (reader.IsDBNull(ordinal))
