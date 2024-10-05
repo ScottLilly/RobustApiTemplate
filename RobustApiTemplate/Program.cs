@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.ResponseCompression;
 using RobustApiTemplate.Engine.Services;
+using RobustApiTemplate.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -40,7 +41,17 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
+
+// Add custom middleware to the request pipeline
+
+// Add CorrelationIdMiddleware, to make a unique identifier for each request,
+// that is available to all downstream components.
+app.UseMiddleware<CorrelationIdMiddleware>();
+
+// Add custom middleware to enforce maximum request size
+app.UseMiddleware<MaxRequestSizeMiddleware>();
 
 app.MapControllers();
 

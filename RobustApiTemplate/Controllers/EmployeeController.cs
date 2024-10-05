@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Asp.Versioning;
+using Microsoft.AspNetCore.Mvc;
 using RobustApiTemplate.Engine.Models;
 using RobustApiTemplate.Engine.Services;
 
