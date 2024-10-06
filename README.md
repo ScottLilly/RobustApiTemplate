@@ -12,7 +12,7 @@ This project is for me to test different techniques to use when building an API,
 - ~~Add CorrelationID to requests, visible downstream, for request/response/error logging~~
 - Rate-limiting (to prevent DDoS)
 - Logging requests, responses, and exceptions
-- Prvent logging sensitive data
+- Prevent logging sensitive data
 - Thorough request data validation and cleansing, with clear error responses
 - Error-handling, with clear error responses
 - Monitoring the service (including having a heartbeat endpoint)
